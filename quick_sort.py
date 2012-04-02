@@ -15,42 +15,46 @@ original = map(int, f.readlines())
 f.close()
 
 def quick_sort(array, s, e, pivot):
-#Return the number of comparisions done during sorting
-#the function will sort the array starting from index s and ending at e, both inclusive.        
-	if s >= e:
+    """Return the number of comparisions done during sorting
+
+    the function will sort the array starting from index s and ending at e, both inclusive.
+
+    """
+    if s >= e:
 		return 0
-	choose_pivot(array, s, e, pivot)
-	p_index = partition(array, s, e)
-	small = quick_sort(array, s, p_index - 1, pivot)
-	large = quick_sort(array, p_index+1, e, pivot)
-	return (e-s) + small + large
+    choose_pivot(array, s, e, pivot)
+    p_index = partition(array, s, e)
+    small = quick_sort(array, s, p_index - 1, pivot)
+    large = quick_sort(array, p_index+1, e, pivot)
+    return (e-s) + small + large
 
 def choose_pivot(a, s, e, pivot):
-#No return value
-#this function chooses pivot depending on the pivot argument and swaps it with the first element in the array
+    """this function chooses pivot depending on the pivot argument and swaps it
+    with the first element in the array
+    """
 	# no work need to be done for pivot == 'first'
-	if pivot == 'last':
-		a[s], a[e] = a[e], a[s]
-	elif pivot == 'median' : 
-		m_index = (e - s)/2 + s
-		if (a[m_index] - a[s]) * (a[m_index] - a[e]) < 0: # a[m_index] is the median
-			a[m_index], a[s] = a[s], a[m_index]
-		elif (a[e] - a[s]) * (a[e] - a[m_index]) < 0: #a[e] is the median 
-			a[e], a[s] = a[s], a[e]
+    if pivot == 'last':
+        a[s], a[e] = a[e], a[s]
+    elif pivot == 'median' : 
+        m_index = (e - s)/2 + s
+        if (a[m_index] - a[s]) * (a[m_index] - a[e]) < 0: # a[m_index] is the median
+            a[m_index], a[s] = a[s], a[m_index]
+        elif (a[e] - a[s]) * (a[e] - a[m_index]) < 0: #a[e] is the median 
+            a[e], a[s] = a[s], a[e]
 
 def partition(a, s, e):
-#partition the array around the pivot, which is at first position.
-	first_large, first_unseen = s+1, s+1
-	pivot = a[s]
-	while first_unseen <= e:
-		if a[first_unseen] < pivot:
-			#swap first large with it
-			a[first_large], a[first_unseen] = a[first_unseen], a[first_large]
-			first_large += 1
-		first_unseen += 1
-	#swap pivot with the last small
-	a[s], a[first_large-1] = a[first_large-1], a[s]
-	return first_large-1
+    """partition the array around the pivot, which is at first position."""
+    first_large, first_unseen = s+1, s+1
+    pivot = a[s]
+    while first_unseen <= e:
+        if a[first_unseen] < pivot:
+            #swap first large with it
+            a[first_large], a[first_unseen] = a[first_unseen], a[first_large]
+            first_large += 1
+        first_unseen += 1
+    #swap pivot with the last small
+    a[s], a[first_large-1] = a[first_large-1], a[s]
+    return first_large-1
 
 print quick_sort(list(original), 0, len(original) - 1, 'first')
 print quick_sort(list(original), 0, len(original) - 1, 'last')
