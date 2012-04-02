@@ -11,12 +11,12 @@ Three different ways to choose the pivot: first, last, median of first, middle, 
 
 # get input numbers
 f=open('QuickSort.txt')
-nums = map(int, f.readlines())
+original = map(int, f.readlines())
 f.close()
 
 def quick_sort(array, s, e, pivot):
 #Return the number of comparisions done during sorting
-#the function will sort the array starting from index s and ending at e, both inclusive. 
+#the function will sort the array starting from index s and ending at e, both inclusive.        
 	if s >= e:
 		return 0
 	choose_pivot(array, s, e, pivot)
@@ -52,5 +52,7 @@ def partition(a, s, e):
 	a[s], a[first_large-1] = a[first_large-1], a[s]
 	return first_large-1
 
-comparisons = quick_sort(nums, 0, len(nums) - 1, 'median')
-print comparisons 
+print quick_sort(list(original), 0, len(original) - 1, 'first')
+print quick_sort(list(original), 0, len(original) - 1, 'last')
+print quick_sort(list(original), 0, len(original) - 1, 'median')
+
