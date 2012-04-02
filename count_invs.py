@@ -5,30 +5,33 @@ So if your answer is 1198233847, then just type 1198233847 in the space provided
 """
 
 def sort_and_count(array):
-	length = len(array)
-	if length <=1:
-		return (array, 0)
-	(left, count_left) = sort_and_count(array[:length/2])
-	(right, count_right) = sort_and_count(array[length/2:])
-	(merged, count_split) = merge_and_count_split(left, right)
-	return (merged , count_left+count_right+count_split)
+    """Returns the sorted array and the number of inversions"""
+    length = len(array)
+    if length <=1:
+        return (array, 0)
+    (left, count_left) = sort_and_count(array[:length/2])
+    (right, count_right) = sort_and_count(array[length/2:])
+    (merged, count_split) = merge_and_count_split(left, right)
+    return (merged , count_left+count_right+count_split)
 
 def merge_and_count_split(left, right):
-	merged = []
-	total, i, j = 0, 0, 0
-	while i < len(left) and j < len(right):
-		if left[i] <= right[j]:
-			merged.append(left[i])
-			i += 1
-		else:
-			merged.append(right[j])
-			j += 1
-			total += len(left) - i
-	if i < len(left):
-		merged.extend(left[i:])
-	else:
-		merged.extend(right[j:])
-	return (merged, total)
+    """Returns a merged array of two sorted subarrays and the number of
+    inversions spanning from left part to right part"""
+    merged = []
+    total, i, j = 0, 0, 0
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            merged.append(left[i])
+            i += 1
+        else:
+            merged.append(right[j])
+            j += 1
+            total += len(left) - i
+    if i < len(left):
+        merged.extend(left[i:])
+    else:
+        merged.extend(right[j:])
+    return (merged, total)
 
 f = open('IntegerArray.txt', 'r')
 nums = map(int, f.readlines())
